@@ -1,0 +1,15 @@
+/**
+ * 限制当前元素中可以显示的最大文字行数, 超出部分用...表示
+ * $line        {Number}    要显示几行(默认 2 行)
+ * $lineHeight  {Number}    每行的行高(默认行高 1.5)
+ */
+@mixin typoClamp($line: 2, $lineHeight: 1.5) {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    -webkit-line-clamp: #{$line};
+    line-height: #{$lineHeight};
+    max-height: #{$line * $lineHeight}em;
+}

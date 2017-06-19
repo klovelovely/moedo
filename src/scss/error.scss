@@ -1,0 +1,28 @@
+@import 'base/base';
+
+.error-container{
+  width: 100%;
+  padding-top: pxToRem(316px);
+  background-color: #fff;
+  @include flexContainer;
+  @include flexVertical;
+  @include flexAlignCenter;
+  .error-icon{
+    width: pxToRem(220px);
+    height: pxToRem(220px);
+    background: url("../images/error_img1.png") no-repeat center;
+    -webkit-background-size:contain;
+    background-size:contain;
+  }
+  .error-title, .error-mes{
+    margin-top: pxToRem(60px);
+    text-align: center;
+    font-size: pxToRem(44px);
+    color: #999;
+    line-height:1;
+  }
+  .error-mes{
+    margin-top: pxToRem(30px);
+    font-size: pxToRem(24px);
+  }
+}

@@ -1,0 +1,19 @@
+@import "../mixins/typoClamp";
+
+$typographyPrefix: 'typo';
+/**
+ * 文字排版库
+ */
+// 单行文本超出自动省略
+.#{$typographyPrefix}-ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+// 多行文本超出 2 行, 自动省略
+.#{$typographyPrefix}-clamp {
+    @include typoClamp(2);
+}
+

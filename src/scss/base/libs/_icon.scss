@@ -1,0 +1,9 @@
+@import "../functions/pxToRem";
+
+.icon {
+    display: inline-block;
+    width: pxToRem(16px);
+    height: pxToRem(16px);
+    background-repeat: no-repeat;
+    background-size: contain;
+}

@@ -1,0 +1,40 @@
+/* 初始化基础配置变量 */
+@import "variables/variables";
+
+/* px -> rem 转换器 */
+@import "functions/pxToRem";
+
+/* font-size 不支持 rem 的解决方案 */
+@import "mixins/fontSizeToRem";
+
+/* 限制当前元素中可以显示的最大文字行数, 超出部分用...表示 */
+@import "mixins/typoClamp";
+
+/* 使当前元素成为一个宽高比自适应的盒子模型 */
+@import "mixins/responsivePhoto";
+
+/* 设置当前元素的默认背景图 */
+@import "mixins/defaultBackground";
+
+/* 基础 flex 布局 */
+@import "mixins/flex";
+
+/* 常用排版 */
+@import "libs/typography";
+
+/* 常用布局 */
+@import "libs/layout";
+
+/* 常用颜色 */
+@import "libs/color";
+
+/* 图片样式 */
+@import "libs/image";
+
+/* 常用动画 */
+@import "libs/animate";
+
+/* 全局图标类 (generated from gulp.smith) */
+//@import "libs/sprite";
+//@import "libs/spriteCustom";
+//@include sprites($spritesheet-sprites);

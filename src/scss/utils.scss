@@ -1,0 +1,19 @@
+$fontFamily:			"Microsoft YaHei","微软雅黑","PingFang SC","Helvetica","Tahoma","Simsun";
+$fontSize:				16px;
+$bodyFontColor:			#464646;
+$bodyDefaultBgColor:	#ededed;
+$linkDefaultColor:		#464646;
+$chiefColor:			#ff5d3d;
+$chiefOrangeColor:		#ffa601;
+$chiefBlueColor:		#3b9df0;
+$chiefGreenColor:		#7dc81d;
+$chiefGrayColor:		#999;
+$borderColor:			#e6e6e6;
+$border2Color:			#ededed;
+$bgWhite:               #fff;
+$headerBg:				#fff;
+
+
+@function rem($px) {
+	@return  $px / $fontSize * 1rem;
+}

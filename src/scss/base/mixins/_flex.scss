@@ -1,0 +1,96 @@
+/**
+ * 通用 flex 布局
+ */
+@mixin flexContainer() {
+    /* webkit, moz历史版本兼容 */
+    display: -webkit-box;
+    display: -moz-box;
+    /* IE私有写法 */
+    display: -ms-flexbox;
+    /* 标准写法 */
+    display: -webkit-flex;
+    display: flex;
+}
+
+/* 方向: 横向排列 */
+@mixin flexRow() {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+/* 方向: 竖直排列 */
+@mixin flexVertical() {
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-box-orient: vertical;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    & > .lyt-flex-item {
+        /* 修复微信旧版本 -webkit-box 下的 -webkit-box-flex:initial 在竖直排列时的 bug */
+        -webkit-box-flex: 1;
+    }
+}
+
+/* justify */
+@mixin flexJustifyStart {
+    -webkit-box-pack: start;
+    -webkit-justify-content: start;
+    -ms-flex-pack: start;
+    justify-content: start;
+}
+@mixin flexJustifyCenter {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+@mixin flexJustifyEnd {
+    -webkit-box-pack: end;
+    -webkit-justify-content: end;
+    -ms-flex-pack: end;
+    justify-content: end;
+}
+@mixin flexJustifySpaceBetween {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+@mixin flexJustifySpaceAround {
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+
+/* align */
+@mixin flexAlignStart {
+    -webkit-box-align: start;
+    -webkit-align-items: start;
+    -ms-flex-align: start;
+    -ms-grid-row-align: start;
+    align-items: start;
+}
+@mixin flexAlignCenter {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+}
+@mixin flexAlignEnd {
+    -webkit-box-align: end;
+    -webkit-align-items: end;
+    -ms-flex-align: end;
+    -ms-grid-row-align: end;
+    align-items: end;
+}
+
+/* 自动换行 */
+@mixin flexWrap {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}

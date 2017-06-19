@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<view class="container">
+
+  <view class="header">
+    <text class="title">Moe Do</text>
+    <view class="for">
+      <image class="photo" src="{{userInfo.avatarUrl}}"></image>
+      <text class="nickName">{{userInfo.nickName}}</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <input bindinput="autoSave" bindfocus="inputFocus" bindconfirm="addTodo" maxlength="-1" value="{{todoTempInput}}" placeholder="骚年, 来搞事呀 😏" focus confirm-hold />
+  </view>
+
+  <view class="section{{item.isDone ? ' done' : '' }}" wx:for="{{todoList}}" wx:if="{{isShowFinishedTodo || !item.isDone}}">
+    <checkbox-group bindchange="todoItemChange" data-index="{{index}}">
+      <view>
+        <label class="checkbox">
+          <checkbox value="{{index}}" checked="{{item.isDone}}" color="#ccc" />
+          <text>{{item.title}}</text>
+        </label>
+      </view>
+    </checkbox-group>
+  </view>
+
+  <view class="layout-fixed-bottom">
+    <view class="section" wx:if="{{todoList.length > 0 && isSomeThingDone}}">
+      <switch checked="{{isShowFinishedTodo}}" bindchange="isShowFinishedTodo" />
+      <text>显示已完成的 todo</text>
+    </view>
+
+    <view class="section" wx:if="{{todoList.length > 0 && isSomeThingDone}}">
+      <button type="danger" bindtap="clearFinishedTodos">清除已完成的 todo</button>
+    </view>
+  </view>
+
+</view>

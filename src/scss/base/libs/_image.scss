@@ -1,0 +1,10 @@
+@import "../functions/pxToRem";
+
+img {
+    &.img-circle {
+        border-radius: 50%;
+    }
+    &.img-rounded {
+        border-radius: pxToRem(10px);
+    }
+}

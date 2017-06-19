@@ -1,0 +1,15 @@
+@import "../functions/pxToRem";
+
+/*
+ * 设置当前元素的默认背景图
+ * 通常配合 responsivePhoto, 即推荐的封面图命名(.photo)类使用
+ * 如果不提供参数, 则默认的 background-size 1:1 (150px * 150px)
+ */
+
+@mixin defaultBackground($width:150px, $height:150px, $withBackgroundColor:false) {
+    background: url("../images/discovery/slice/icon-bg-default.png") no-repeat center;
+    @if $withBackgroundColor {
+        background-color: #fafafa;
+    }
+    background-size: pxToRem($width) pxToRem($height);
+}

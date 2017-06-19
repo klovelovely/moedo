@@ -1,0 +1,41 @@
+@import "../functions/pxToRem";
+
+/*
+ * 使当前元素成为一个宽高比自适应的盒子模型
+ * 通常用于显示一些宽高不固定的背景图片, 如海报封面
+ * 如果不提供参数, 则默认的宽高为 1:1 (750px * 750px)
+ */
+@mixin responsivePhoto($width: 750px, $height: 100%, $borderRadius: 10px) {
+    display: block;
+
+    // 如果提供的宽度为 px 单位, 则转化为 rem 单位
+    @if unit($width) == 'px' {
+        width: pxToRem($width);
+    } @else {
+        width: $width;
+    }
+
+    background: rgba(245, 245, 245, 0.62) no-repeat center center;
+    background-size: cover;
+
+    // 如果提供的宽度为 px 单位, 则转化为 rem 单位
+    @if unit($borderRadius) == 'px' {
+        border-radius: pxToRem($borderRadius);
+    } @else {
+        border-radius: $borderRadius;
+    }
+
+    &:before {
+        content: '';
+        display: block;
+
+        // 如果提供的宽和高均为像素单位, 则计算出需要 padding 的百分比值
+        @if unit($height) == 'px' and unit($width) == 'px' {
+            $percent: ($height / $width) * 100%;
+            padding-bottom: $percent;
+        } @else {
+            padding-bottom: $height;
+        }
+
+    }
+}

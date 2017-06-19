@@ -1,0 +1,1136 @@
+@import "../variables/variables";
+@import "../functions/pxToRem";
+@import "../mixins/fontSizeToRem";
+@import "../mixins/typoClamp";
+@import "../mixins/responsivePhoto";
+@import "../mixins/defaultBackground";
+@import "../mixins/flex";
+
+$layoutPrefix: 'lyt';
+
+/**
+ * 布局用模块
+ */
+
+.#{$layoutPrefix}-hide {
+    display: none !important;
+}
+
+.#{$layoutPrefix}-show {
+    display: block !important;
+}
+
+.#{$layoutPrefix}-clearfix,
+.clearfix {
+    &:after,
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+
+.#{$layoutPrefix}-pull-left {
+    float: left;
+}
+
+.#{$layoutPrefix}-pull-right {
+    float: right;
+}
+
+.#{$layoutPrefix}-text-center {
+    text-align: center;
+}
+
+.#{$layoutPrefix}-block-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 绝对定位 - 上下左右居中 */
+.#{$layoutPrefix}-abs-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+/* 绝对定位 - 左上角 */
+.#{$layoutPrefix}-abs-left-top {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* 绝对定位 - 右上角 */
+.#{$layoutPrefix}-abs-right-top {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* 绝对定位 - 左下角 */
+.#{$layoutPrefix}-abs-left-bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+/* 绝对定位 - 右下角 */
+.#{$layoutPrefix}-abs-right-bottom {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+/* 固定定位 - 窗口顶部固定 */
+.#{$layoutPrefix}-fixed-top {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+/* 固定定位 - 窗口顶部左侧固定 */
+.#{$layoutPrefix}-fixed-top-left {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* 固定定位 - 窗口顶部右侧固定 */
+.#{$layoutPrefix}-fixed-top-right {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/* 固定定位 - 窗口底部固定 */
+.#{$layoutPrefix}-fixed-bottom {
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    //background: rgba(255, 255, 255, .95);
+    //box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+}
+
+/* 固定定位 - 窗口底部左侧固定 */
+.#{$layoutPrefix}-fixed-bottom-left {
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* 固定定位 - 窗口底部右侧固定 */
+.#{$layoutPrefix}-fixed-bottom-right {
+    position: fixed !important;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/**
+ * layout 工具库
+ *
+ * 命名规则:
+ * 1. #{$layoutPrefix}- 为布局用工具库的统一前缀标识符
+ * 2. m 和 p 为 CSS 属性标识符, 分别代表 margin 和 padding
+ * 3. w h t r b l 分别代表 width height top right bottom left
+ * 4. 最后一位为数字位, 表示 CSS 属性的值
+ *
+ * 示例:
+ *      #{$layoutPrefix}-m10  {margin: 10rem;}
+ *      #{$layoutPrefix}-mw10  {margin-left:10rem;margin-right:10rem;}
+ *      #{$layoutPrefix}-pr20  {padding-right:20rem;}
+ */
+$GlobalREMNumber: $GlobalREMSize / 1px;
+@for $i from 1 to 11 {
+    .#{$layoutPrefix}-m#{$i * 5} {
+        margin: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-mw#{$i * 5} {
+        margin-left: #{$i * 5 / $GlobalREMNumber}rem;
+        margin-right: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-mh#{$i * 5} {
+        margin-top: #{$i * 5 / $GlobalREMNumber}rem;
+        margin-bottom: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-mt#{$i * 5} {
+        margin-top: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-mr#{$i * 5} {
+        margin-right: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-mb#{$i * 5} {
+        margin-bottom: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-ml#{$i * 5} {
+        margin-left: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-p#{$i * 5} {
+        padding: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-pw#{$i * 5} {
+        padding-left: #{$i * 5 / $GlobalREMNumber}rem;
+        padding-right: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-ph#{$i * 5} {
+        padding-top: #{$i * 5 / $GlobalREMNumber}rem;
+        padding-bottom: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-pt#{$i * 5} {
+        padding-top: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-pr#{$i * 5} {
+        padding-right: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-pb#{$i * 5} {
+        padding-bottom: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+    .#{$layoutPrefix}-pl#{$i * 5} {
+        padding-left: #{$i * 5 / $GlobalREMNumber}rem;
+    }
+}
+
+/**
+ * 通用 flex 布局
+ */
+.#{$layoutPrefix}-flex-container {
+    /* webkit, moz历史版本兼容 */
+    display: -webkit-box;
+    display: -moz-box;
+    /* IE私有写法 */
+    display: -ms-flexbox;
+    /* 标准写法 */
+    display: -webkit-flex;
+    display: flex;
+
+    /* 子元素 */
+    /* 填充方式: 默认 */
+    & > .#{$layoutPrefix}-flex-item {
+        /* webkit, moz历史版本兼容 */
+        -webkit-box-flex: initial;
+        -moz-box-flex: initial;
+        /* IE私有写法 */
+        -ms-flex: auto;
+        /* 标准写法 */
+        -webkit-flex: auto;
+        flex: auto;
+    }
+    /* 方向: 横向排列 */
+    &.#{$layoutPrefix}-flex-row {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    /* 方向: 竖直排列 */
+    &.#{$layoutPrefix}-flex-vertical {
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -ms-box-orient: vertical;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        & > .#{$layoutPrefix}-flex-item {
+            /* 修复微信旧版本 -webkit-box 下的 -webkit-box-flex:initial 在竖直排列时的 bug */
+            -webkit-box-flex: 1;
+        }
+    }
+    /* justify */
+    &.#{$layoutPrefix}-flex-justify-start {
+        -webkit-box-pack: start;
+        -webkit-justify-content: start;
+        -ms-flex-pack: start;
+        justify-content: start;
+    }
+    &.#{$layoutPrefix}-flex-justify-center {
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    &.#{$layoutPrefix}-flex-justify-end {
+        -webkit-box-pack: end;
+        -webkit-justify-content: end;
+        -ms-flex-pack: end;
+        justify-content: end;
+    }
+    &.#{$layoutPrefix}-flex-justify-space-between {
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+    &.#{$layoutPrefix}-flex-justify-space-around {
+        -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+    }
+
+    /* align */
+    &.#{$layoutPrefix}-flex-align-start {
+        -webkit-box-align: start;
+        -webkit-align-items: start;
+        -ms-flex-align: start;
+        -ms-grid-row-align: start;
+        align-items: start;
+    }
+    &.#{$layoutPrefix}-flex-align-center {
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+        align-items: center;
+    }
+    &.#{$layoutPrefix}-flex-align-end {
+        -webkit-box-align: end;
+        -webkit-align-items: end;
+        -ms-flex-align: end;
+        -ms-grid-row-align: end;
+        align-items: end;
+    }
+
+    /* 自动换行 */
+    &.#{$layoutPrefix}-flex-wrap {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+}
+
+/*
+ * 通用 box 模型
+ */
+.#{$layoutPrefix}-box {
+    position: relative;
+    & > .#{$layoutPrefix}-hd {
+        padding: pxToRem(24px) pxToRem(32px) pxToRem(24px);
+        .title {
+            @include fontSizeToRem(36px);
+            line-height: 1;
+            color: $bodyFontColor;
+            &:before,
+            &:after {
+                display: inline-block;
+            }
+            &:before {
+                margin-right: pxToRem(20px);
+            }
+            &:after {
+                margin-left: pxToRem(20px);
+            }
+        }
+        .sub-title {
+            margin-top: pxToRem(10px);
+            @include fontSizeToRem(22px);
+            line-height: 1;
+            color: $chiefGrayColor;
+        }
+    }
+    & > .#{$layoutPrefix}-bd {
+        padding: pxToRem(10px) pxToRem(32px) pxToRem(10px);
+    }
+    & > .#{$layoutPrefix}-ft {
+        position: absolute;
+        top: pxToRem(24px);
+        right: pxToRem(32px);
+        .item {
+            @include fontSizeToRem(34px);
+            line-height: 1;
+            color: $chiefColor;
+        }
+    }
+}
+
+/**
+ * 其他组件
+ */
+.#{$layoutPrefix}-split {
+    display: block;
+    height: pxToRem(16px);
+    background: #f5f5f5;
+}
+
+/*
+ * 通用 list 模型
+ */
+.#{$layoutPrefix}-list {
+    & > .#{$layoutPrefix}-list-item {
+        position: relative;
+        padding: pxToRem(20px) 0;
+        border-bottom: 1px solid #eee;
+        &:nth-last-of-type(1) {
+            border-bottom: 0 none;
+        }
+        & > .#{$layoutPrefix}-item-thumb {
+            min-width: pxToRem(120px);
+            min-height: pxToRem(120px);
+            @include defaultBackground(100px, 100px);
+            .photo {
+                @include responsivePhoto(120px, 100%, 50%);
+            }
+            & > img {
+                display: block;
+                width: pxToRem(120px);
+                height: pxToRem(120px);
+            }
+        }
+        & > .#{$layoutPrefix}-item-content {
+            width: 100%;
+            max-width: pxToRem(480px);
+            padding-left: pxToRem(30px);
+            & > .#{$layoutPrefix}-item-title {
+                .text {
+                    display: inline-block;
+                    vertical-align: middle;
+                    max-width: 12em;
+                    @include fontSizeToRem(28px);
+                    color: $bodyFontColor;
+                }
+                .badge {
+                    display: inline-block;
+                    vertical-align: middle;
+                    /*position: relative;
+                    top: -.5em;*/
+                    margin-left: pxToRem(10px);
+                    padding: pxToRem(3px) pxToRem(8px);
+                    font-size: 100%;
+                    background: #fc5d3d;
+                    color: #fff;
+                    border-radius: 1em;
+                }
+            }
+            & > .#{$layoutPrefix}-item-brief {
+                @include fontSizeToRem(22px);
+                color: $chiefGrayColor;
+                & > span {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: pxToRem(10px);
+                }
+                & > .brief-item {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: pxToRem(10px);
+                    padding-right: pxToRem(10px);
+                    line-height: 1;
+                    border-right: pxToRem(2px) solid #eee;
+                    &:nth-last-of-type(1) {
+                        border-right: 0 none;
+                    }
+                }
+            }
+        }
+        & > .#{$layoutPrefix}-item-extra {
+            flex: 0;
+            position: absolute;
+            right: pxToRem(20px);
+            top: 50%;
+            transform: translate3d(0, -50%, 0);
+        }
+    }
+    &-horizontal {
+        white-space: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+        & > .#{$layoutPrefix}-list-item {
+            display: inline-block;
+            vertical-align: top;
+            border-right: 1px solid #f5f5f5;
+            white-space: normal;
+            .photo {
+                img {
+                    display: block;
+                    max-width: 100%;
+                    margin: 0 auto;
+                }
+            }
+            .name {
+                display: block;
+                height: pxToRem(38px);
+                line-height: pxToRem(38px);
+                @include fontSizeToRem(28px);
+                text-align: center;
+            }
+            &.active {
+                color: $chiefOrangeColor;
+            }
+        }
+    }
+}
+
+/*
+ * 通用 comment list 模型
+ */
+.#{$layoutPrefix}-comment-list {
+    & > .#{$layoutPrefix}-comment-list-item {
+        position: relative;
+        padding: pxToRem(20px) 0;
+        border-bottom: 1px solid #eee;
+        &:nth-last-of-type(1) {
+            border-bottom: 0 none;
+        }
+
+        & > .subject {
+            .user {
+                .avatar {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include defaultBackground(35px, 35px);
+                    .photo {
+                        @include responsivePhoto(50px, 100%, 50%);
+                    }
+                }
+                .name {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include fontSizeToRem(28px);
+                    line-height: pxToRem(50px);
+                    color: $chiefGrayColor;
+                }
+            }
+            .content {
+                padding-top: pxToRem(30px);
+                word-break: break-all;
+                @include fontSizeToRem(28px);
+                color: $bodyFontColor;
+            }
+            .extra {
+                padding: pxToRem(40px) 0;
+                /* webkit, moz历史版本兼容 */
+                display: -webkit-box;
+                display: -moz-box;
+                /* IE私有写法 */
+                display: -ms-flexbox;
+                /* 标准写法 */
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-pack: justify;
+                -webkit-justify-content: space-between;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                .time {
+                    display: inline-block;
+                    height: pxToRem(40px);
+                    line-height: pxToRem(40px);
+                    @include fontSizeToRem(24px);
+                    color: $chiefGrayColor;
+                }
+                .action {
+                    height: pxToRem(40px);
+                    line-height: pxToRem(28px);
+                    @include fontSizeToRem(28px);
+                    color: $chiefGrayColor;
+                    &.active {
+                        color: $chiefColor;
+                    }
+                    .icon,
+                    .text {
+                        display: inline-block;
+                        vertical-align: middle;
+                        min-width: 1em;
+                    }
+                    .text {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        & > .reply {
+            padding-left: 1em;
+            .user {
+                margin-top: pxToRem(20px);
+                .name {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include fontSizeToRem(28px);
+                    line-height: pxToRem(50px);
+                    color: $chiefGrayColor;
+                }
+            }
+            .content {
+                padding-top: pxToRem(30px);
+                @include fontSizeToRem(28px);
+                color: $chiefGrayColor;
+            }
+            .extra {
+                padding: pxToRem(40px) 0;
+                /* webkit, moz历史版本兼容 */
+                display: -webkit-box;
+                display: -moz-box;
+                /* IE私有写法 */
+                display: -ms-flexbox;
+                /* 标准写法 */
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-pack: justify;
+                -webkit-justify-content: space-between;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                .time {
+                    display: inline-block;
+                    @include fontSizeToRem(24px);
+                    line-height: pxToRem(40px);
+                    color: $chiefGrayColor;
+                }
+                .action {
+                    height: pxToRem(40px);
+                    line-height: pxToRem(40px);
+                    @include fontSizeToRem(28px);
+                    color: $chiefGrayColor;
+                    &.active {
+                        color: $chiefColor;
+                    }
+                    .icon,
+                    .text {
+                        display: inline-block;
+                        vertical-align: middle;
+                        min-width: 1em;
+                    }
+                    .text {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        & > .#{$layoutPrefix}-item-thumb {
+            width: pxToRem(120px);
+            /*flex-shrink: 0;
+            flex-basis: auto;*/
+            & > img {
+                display: block;
+                width: pxToRem(120px);
+                height: auto;
+            }
+        }
+        & > .#{$layoutPrefix}-item-content {
+            width: 100%;
+            padding-left: pxToRem(30px);
+            padding-right: pxToRem(80px);
+            & > .#{$layoutPrefix}-item-title {
+                .text {
+                    display: inline-block;
+                    vertical-align: middle;
+                    max-width: 12em;
+                    @include fontSizeToRem(28px);
+                    color: $bodyFontColor;
+                }
+                .badge {
+                    display: inline-block;
+                    vertical-align: middle;
+                    /*position: relative;
+                    top: -.5em;*/
+                    margin-left: pxToRem(10px);
+                    padding: pxToRem(3px) pxToRem(8px);
+                    font-size: 100%;
+                    background: #fc5d3d;
+                    color: #fff;
+                    border-radius: 1em;
+                }
+            }
+            & > .#{$layoutPrefix}-item-brief {
+                @include fontSizeToRem(22px);
+                color: $chiefGrayColor;
+                & > span {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: pxToRem(10px);
+                }
+            }
+        }
+        & > .#{$layoutPrefix}-item-extra {
+            flex: 0;
+            position: absolute;
+            right: pxToRem(20px);
+            top: 50%;
+            transform: translate3d(0, -50%, 0);
+        }
+    }
+    &-horizontal {
+        white-space: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+        & > .#{$layoutPrefix}-list-item {
+            display: inline-block;
+            border-right: 1px solid #f5f5f5;
+            white-space: normal;
+            .photo {
+                img {
+                    display: block;
+                    max-width: 100%;
+                    margin: 0 auto;
+                }
+            }
+            .name {
+                display: block;
+                height: pxToRem(38px);
+                line-height: pxToRem(38px);
+                @include fontSizeToRem(28px);
+                text-align: center;
+            }
+            &.active {
+                color: $chiefOrangeColor;
+            }
+        }
+    }
+}
+
+/*
+ * 通用 media 模型 (用于带 banner 的图片或视频)
+ */
+.#{$layoutPrefix}-media-list {
+    & > .#{$layoutPrefix}-media-list-item {
+        position: relative;
+        margin: pxToRem(30px) 0;
+        & > .#{$layoutPrefix}-item-thumb {
+            position: relative;
+            @include defaultBackground();
+            & > .photo {
+                @include responsivePhoto(686px, 55.393586%);
+            }
+            & > .layer-play-button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate3d(-50%, -50%, 0);
+            }
+            & > .layer-user-card {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: pxToRem(22px);
+                @include flexContainer();
+                .avatar {
+                    float: left;
+                    margin-right: pxToRem(16px);
+                    width: pxToRem(90px);
+                    min-width: pxToRem(90px);
+                    height: pxToRem(90px);
+                    .photo {
+                        @include responsivePhoto(90px, 100%, 50%);
+                        border: 2px solid #FFF;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+                    }
+                }
+                .user-info {
+                    float: left;
+                    .name,
+                    .brief {
+                        @include fontSizeToRem(26px);
+                        line-height: 1.730769231;
+                        color: #fff;
+                        text-shadow: 1px 1px 0 rgba(0, 0, 0, .1);
+                    }
+                    .brief {
+                        @include typoClamp(1, 1.5);
+                    }
+                }
+            }
+        }
+        & > .#{$layoutPrefix}-item-content {
+            width: 100%;
+            padding: pxToRem(20px) 0 pxToRem(20px) 0;
+            & > .#{$layoutPrefix}-item-title {
+                .tag {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include fontSizeToRem(36px);
+                    color: $chiefOrangeColor;
+                    margin-right: pxToRem(5px);
+                }
+                .text {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include fontSizeToRem(36px);
+                    color: $bodyFontColor;
+                }
+                .badge {
+                    display: inline-block;
+                    vertical-align: middle;
+                    /*position: relative;
+                    top: -.5em;*/
+                    margin-left: pxToRem(10px);
+                    padding: pxToRem(3px) pxToRem(8px);
+                    font-size: 100%;
+                    background: #fc5d3d;
+                    color: #fff;
+                    border-radius: 1em;
+                }
+            }
+            & > .#{$layoutPrefix}-item-brief {
+                @include fontSizeToRem(22px);
+                color: $chiefGrayColor;
+                & > .desc,
+                & > .column,
+                & > .info {
+                    margin-top: pxToRem(6px);
+                }
+                & > .desc {
+                    line-height: pxToRem(40px);
+                    @include typoClamp(3, 1.818181818);
+                }
+                & > .column {
+                    line-height: pxToRem(40px);
+                    color: $chiefOrangeColor;
+                }
+                & > .info {
+                    &:after {
+                        content: '';
+                        display: block;
+                        clear: both;
+                    }
+                    .at,
+                    .stat {
+                        line-height: pxToRem(32px);
+                    }
+                    .at {
+                        float: left;
+                    }
+                    .stat {
+                        float: right;
+                        .item {
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-right: pxToRem(10px);
+                            span {
+                                display: inline-block;
+                                vertical-align: middle;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & > .#{$layoutPrefix}-item-extra {
+
+        }
+    }
+}
+
+/*
+ * 通用 media 模型 (用于带 banner 的图片或视频)
+ */
+.#{$layoutPrefix}-collection-list {
+    & > .#{$layoutPrefix}-collection-list-item {
+        position: relative;
+        margin: pxToRem(50px) 0;
+        & > .#{$layoutPrefix}-item-content {
+            width: 100%;
+            margin: pxToRem(20px) 0 pxToRem(20px) 0;
+            & > .#{$layoutPrefix}-item-title {
+                /*.tag {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include fontSizeToRem(36px);
+                    color: $chiefOrangeColor;
+                    margin-right: pxToRem(5px);
+                }*/
+                .text {
+                    display: inline-block;
+                    vertical-align: middle;
+                    @include fontSizeToRem(36px);
+                    color: $bodyFontColor;
+                }
+                /*.badge {
+                    display: inline-block;
+                    vertical-align: middle;
+                    !*position: relative;
+                    top: -.5em;*!
+                    margin-left: pxToRem(10px);
+                    padding: pxToRem(3px) pxToRem(8px);
+                    font-size: 100%;
+                    background: #fc5d3d;
+                    color: #fff;
+                    border-radius: 1em;
+                }*/
+            }
+            & > .#{$layoutPrefix}-item-brief {
+                @include fontSizeToRem(22px);
+                color: $chiefGrayColor;
+                & > .desc,
+                & > .info {
+                    margin-top: pxToRem(6px);
+                }
+                & > .desc {
+                    line-height: pxToRem(40px);
+                    @include typoClamp(3, 1.818181818);
+                }
+                & > .info {
+                    &:after {
+                        content: '';
+                        display: block;
+                        clear: both;
+                    }
+                    .at,
+                    .stat {
+                        line-height: pxToRem(32px);
+                    }
+                    .at {
+                        float: left;
+                    }
+                    .stat {
+                        float: right;
+                        .item {
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-right: pxToRem(10px);
+                            span {
+                                display: inline-block;
+                                vertical-align: middle;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & > .#{$layoutPrefix}-item-thumb {
+            position: relative;
+            & > .lyt-flex-container {
+                & > .lyt-flex-item {
+                    display: block;
+                    width: pxToRem(216px);
+                    margin-right: pxToRem(20px);
+                    background: #f5f5f5 no-repeat center center;
+                    background-size: cover;
+                    &:before {
+                        content: '';
+                        display: block;
+                        padding-bottom: 100%;
+                    }
+                    &:nth-last-of-type(1) {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+        & > .#{$layoutPrefix}-item-extra {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
+}
+
+/* 闪购 - 商品按原料分类的列表 */
+.#{$layoutPrefix}-material-list {
+    margin-left: pxToRem(-32px);
+    margin-right: pxToRem(-32px);
+    .#{$layoutPrefix}-material-item {
+        padding: pxToRem(20px) pxToRem(32px) pxToRem(20px) pxToRem(32px);
+        border-bottom: 1px solid #eee;
+        &:nth-last-of-type(1) {
+            border: 0 none;
+        }
+        .#{$layoutPrefix}-material-name {
+            width: 100%;
+            @include flexContainer();
+            @include flexAlignCenter();
+            .checker,
+            .text {
+                display: inline-block;
+            }
+            .checker {
+                margin-right: pxToRem(10px);
+                input {
+                    display: block;
+                    width: pxToRem(30px);
+                    height: pxToRem(30px);
+                    border: 1px solid #ccc;
+                    background-color: #fff;
+                    border-radius: 50%;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    &:checked {
+                        background: $chiefColor url("../images/icon_check_active.png") no-repeat center;
+                        background-size: contain;
+                        border-color: $chiefColor;
+                    }
+                }
+            }
+            .text {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                @include fontSizeToRem(28px);
+            }
+        }
+        .#{$layoutPrefix}-related-goods {
+
+        }
+    }
+}
+
+/* 闪购 - 具体的商品列表 */
+.#{$layoutPrefix}-goods-flash-buy-list {
+    & > .#{$layoutPrefix}-goods-flash-buy-list-item {
+        position: relative;
+        @include flexContainer();
+        @include flexAlignStart();
+        padding-top: pxToRem(20px);
+        padding-bottom: pxToRem(20px);
+        border-bottom: 1px solid #eee;
+        &:nth-last-of-type(1) {
+            border: 0 none;
+        }
+        .checker {
+            padding-right: pxToRem(20px);
+            input {
+                display: block;
+                width: pxToRem(30px);
+                height: pxToRem(30px);
+                margin-top: pxToRem(40px);
+                margin-bottom: pxToRem(40px);
+                border: 1px solid #ccc;
+                background-color: #fff;
+                border-radius: 50%;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                &:checked {
+                    background: $chiefColor url("../images/icon_check_active.png") no-repeat center;
+                    background-size: contain;
+                    border-color: $chiefColor;
+                }
+            }
+        }
+        .photo-wrapper {
+            padding-right: pxToRem(20px);
+            @include defaultBackground(110px, 100px);
+            .photo {
+                @include responsivePhoto(130px, 100%, 0);
+                border: 1px solid #eee;
+            }
+        }
+        .goods-brief {
+            padding-right: pxToRem(20px);
+            @include flexContainer();
+            @include flexVertical();
+            @include flexJustifyCenter();
+            .goods-name {
+                @include fontSizeToRem(26px);
+                @include typoClamp(2, 1.5);
+                line-height: 1.5;
+            }
+            .goods-spec {
+                margin-top: pxToRem(10px);
+                @include fontSizeToRem(24px);
+                color: $chiefGrayColor;
+            }
+            .goods-price {
+                margin-top: pxToRem(20px);
+                @include fontSizeToRem(24px);
+                color: $chiefColor;
+                &:after {
+                    content: '';
+                    display: block;
+                    clear: both;
+                }
+                & > * {
+                    display: block;
+                    float: left;
+                    line-height: 1;
+                }
+                .currency-unit {
+                    @include fontSizeToRem(24px);
+                    margin-top: .5em;
+                    font-size: 75%;
+                }
+                .number {
+                    @include fontSizeToRem(28px);
+                }
+                .goods-spec {
+                    @include fontSizeToRem(24px);
+                    margin-top: .9em;
+                    font-size: 62%;
+                }
+            }
+        }
+        .action {
+            position: absolute;
+            right: pxToRem(10px);
+            bottom: pxToRem(10px);
+            .goods-regulator {
+                @include flexContainer();
+                height: pxToRem(46px);
+                line-height: pxToRem(46px);
+                border: 1px solid #e6e6e6;
+                text-align: center;
+                font-family: Helvetica, serif;
+                border-radius: 46px;
+                .btn-decrease,
+                .btn-increase {
+                    position: relative;
+                    width: pxToRem(50px);
+                    line-height: pxToRem(36px);
+                    @include fontSizeToRem(36px);
+                    color: $chiefColor;
+                    text-indent: -9999em;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate3d(-50%, -50%, 0);
+                        width: pxToRem(20px);
+                        height: pxToRem(4px);
+                        background-color: $chiefOrangeColor;
+                    }
+                    &.disable {
+                        &:before,
+                        &:after {
+                            background-color: $chiefGrayColor;
+                        }
+                    }
+                }
+                .btn-decrease {
+                    border-right: 1px solid #e6e6e6;
+                    &:before {
+                        width: pxToRem(16px);
+                    }
+                }
+                .btn-increase {
+                    border-left: 1px solid #e6e6e6;
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate3d(-50%, -50%, 0);
+                        width: pxToRem(4px);
+                        height: pxToRem(20px);
+                        background-color: $chiefOrangeColor;
+                    }
+                }
+                .goods-number {
+                    width: pxToRem(60px);
+                    line-height: pxToRem(28px);
+                    @include fontSizeToRem(28px);
+                    text-align: center;
+                    background: none;
+                }
+            }
+            //.btn-quick-add-cart {
+            //    display: inline-block;
+            //    width: pxToRem(53px);
+            //    height: pxToRem(40px);
+            //    background: url("../images/icon_add.png") no-repeat center;
+            //    background-size: contain;
+            //}
+        }
+    }
+}
